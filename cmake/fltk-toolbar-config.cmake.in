@@ -1,0 +1,5 @@
+@PACKAGE_INIT@
+include(CMakeFindDependencyMacro)
+find_dependency(FLTK 1.4.5 CONFIG)
+include("${CMAKE_CURRENT_LIST_DIR}/fltk-toolbar-targets.cmake")
+check_required_components(fltk-toolbar)
