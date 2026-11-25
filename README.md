@@ -28,6 +28,12 @@ before discarding the previous one. It accepts SVG markup and a logical icon
 size from 1 to 256 pixels, throwing on failure. Trusted application SVGs can be
 embedded at compile time. SVG sanitization is outside this library's scope.
 
+Version 0.1.1 renders the SVG into owned pixels and composites the icon over the
+button background. FLTK draws opaque RGB images, avoiding late SVG rasterization
+and platform alpha blending in remote display sessions. Hover/pressed background
+changes rebuild the composites; moving to a different display scale rerenders
+the SVG at that resolution. SVG remains the source asset.
+
 SVG support is part of `fltk-toolbar`, using FLTK's image library. There is no
 separate SVG target. CSS is optional application integration: for example,
 `Fl_Css_Widget<fltk_toolbar::SvgButton>` combines it with fltk-css.
