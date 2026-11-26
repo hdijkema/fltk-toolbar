@@ -34,8 +34,8 @@ changes. The Penthario website links here rather than maintaining a second copy.
 
 `docs/index.html` is the standalone landing page. `docs/assets/logo.svg` is the
 library's vector logo and favicon; `docs/style.css` provides responsive layout
-and system light/dark themes. All assets and fonts are local or system-provided;
-there is no JavaScript, tracking or build dependency in the library itself.
+and explicit light/dark themes. All assets and fonts are local or system-provided;
+the only script is the small theme control; the library itself has no website dependency.
 
 GitHub Pages can publish the default branch's `/docs` directory. Jekyll uses
 `docs/_config.yml`, `jekyll-optional-front-matter` and the documentation layout
@@ -55,3 +55,12 @@ python -m http.server 8000 --directory build/site
 Open `http://localhost:8000/fltk-toolbar/`. The destination includes the configured
 repository base path so API-page assets resolve correctly. Publishing requires the repository's GitHub Pages setting;
 adding these source files does not change that setting or publish the site.
+
+## Website theme control
+
+The homepage and documentation layout start with `data-theme="dark"`.
+`theme.js` restores a saved light/dark choice before the body paints and attaches
+the keyboard-accessible header button. The preference uses the site's own
+`data-theme-key` in local storage; storage failures do not prevent switching.
+The default is dark even when the operating system prefers light. Without
+JavaScript, the pages retain their default dark appearance.

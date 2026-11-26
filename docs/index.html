@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="en">
+<html lang="en" data-theme="dark" data-theme-key="fltk-toolbar-theme">
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -10,12 +10,14 @@
   <meta property="og:description" content="A small horizontal toolbar for FLTK, with ordinary buttons, separators and crisp SVG icons. Native callbacks and shortcuts keep working.">
   <meta property="og:type" content="website">
   <link rel="icon" href="assets/logo.svg" type="image/svg+xml">
+  <script src="theme.js"></script>
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
   <a class="skip-link" href="#main">Skip to content</a>
   <header class="container site-header">
     <a class="brand" href="./"><img src="assets/logo.svg" width="42" height="42" alt=""><span>fltk-toolbar</span></a>
+    <button class="theme-toggle" id="theme-toggle" type="button" aria-label="Switch to light theme" hidden>Light theme</button>
     <nav aria-label="Main navigation"><a href="#quickstart">Quick start</a><a href="API.html">API &amp; examples</a><a href="https://github.com/hdijkema/fltk-toolbar">GitHub &nearr;</a></nav>
   </header>
   <main class="container" id="main">
@@ -56,6 +58,6 @@ toolbar-&gt;end();</code></pre><div class="code-caption">Usage excerpt; surround
       <div class="reading-links"><a href="API.html">API reference &amp; examples <span>&nearr;</span></a><a href="https://github.com/hdijkema/fltk-toolbar#readme">Build &amp; installation <span>&nearr;</span></a><a href="https://github.com/hdijkema/fltk-toolbar/issues">Issues &amp; feedback <span>&nearr;</span></a></div>
     </section>
   </main>
-  <footer class="container site-footer"><span>fltk-toolbar &middot; <a href="https://github.com/hdijkema/fltk-toolbar/blob/main/LICENSE">LGPL 2.1</a> &middot; Built for <a href="https://www.fltk.org/">FLTK</a></span><div class="family" aria-label="Related libraries"><a href="https://hdijkema.github.io/fltk-css/">fltk-css</a> <a href="https://hdijkema.github.io/fltk-cell/">fltk-cell</a> <a href="https://hdijkema.github.io/fltk-dock/">fltk-dock</a></div></footer>
+  <footer class="container site-footer"><span>fltk-toolbar &middot; <a href="https://github.com/hdijkema/fltk-toolbar/blob/main/LICENSE">LGPL 2.1</a> &middot; Built for <a href="https://www.fltk.org/">FLTK</a></span><div class="family" aria-label="Related libraries"><a href="https://hdijkema.github.io/fltk-trayicon/">fltk-trayicon</a> <a href="https://hdijkema.github.io/fltk-css/">fltk-css</a> <a href="https://hdijkema.github.io/fltk-cell/">fltk-cell</a> <a href="https://hdijkema.github.io/fltk-dock/">fltk-dock</a></div></footer>
 </body>
 </html>
