@@ -1,0 +1,14 @@
+title: fltk-toolbar
+url: https://hdijkema.github.io
+baseurl: /fltk-toolbar
+repository_url: https://github.com/hdijkema/fltk-toolbar
+markdown: kramdown
+kramdown:
+  input: GFM
+plugins:
+  - jekyll-optional-front-matter
+defaults:
+  - scope:
+      path: "**/*.md"
+    values:
+      layout: documentation

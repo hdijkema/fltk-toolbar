@@ -1,0 +1,61 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="A small horizontal toolbar for FLTK, with ordinary buttons, separators and crisp SVG icons. Native callbacks and shortcuts keep working.">
+  <meta name="theme-color" content="#9a5c10">
+  <title>fltk-toolbar &middot; Useful commands. Within reach.</title>
+  <meta property="og:title" content="fltk-toolbar &middot; Useful commands. Within reach.">
+  <meta property="og:description" content="A small horizontal toolbar for FLTK, with ordinary buttons, separators and crisp SVG icons. Native callbacks and shortcuts keep working.">
+  <meta property="og:type" content="website">
+  <link rel="icon" href="assets/logo.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <a class="skip-link" href="#main">Skip to content</a>
+  <header class="container site-header">
+    <a class="brand" href="./"><img src="assets/logo.svg" width="42" height="42" alt=""><span>fltk-toolbar</span></a>
+    <nav aria-label="Main navigation"><a href="#quickstart">Quick start</a><a href="API.html">API &amp; examples</a><a href="https://github.com/hdijkema/fltk-toolbar">GitHub &nearr;</a></nav>
+  </header>
+  <main class="container" id="main">
+    <section class="hero" aria-labelledby="hero-title">
+      <div class="hero-copy">
+        <p class="eyebrow">Small libraries. Native interfaces.</p>
+        <h1 id="hero-title">fltk<span>-toolbar</span></h1>
+        <p class="tagline">Useful commands. Within reach.</p>
+        <p class="lead">A small horizontal toolbar for FLTK, with ordinary buttons, separators and crisp SVG icons. Native callbacks and shortcuts keep working.</p>
+        <div class="actions"><a class="button" href="API.html">Read the documentation <span aria-hidden="true">&rarr;</span></a><a class="text-link" href="https://github.com/hdijkema/fltk-toolbar">Browse source &nearr;</a></div>
+        <p class="meta">C++17 &nbsp;&middot;&nbsp; FLTK 1.4.5 &nbsp;&middot;&nbsp; LGPL 2.1</p>
+      </div>
+      <figure class="hero-visual">
+        <div class="demo-window toolbar-demo"><div class="window-bar"><span class="window-dots"><i></i><i></i><i></i></span><span>Tools for the task</span><span>TOOLBAR</span></div><div class="mock-toolbar"><span class="mock-tool"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 7h7l2 3h9l-2 10H3Z M3 7V4h7l2 3"/></svg><span>Open</span></span><i class="tool-divider"></i><span class="mock-tool active-tool"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m7 4 13 8-13 8Z"/></svg><span>Run</span></span><span class="mock-tool"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m9 3 6 0-1 6 4 5H6l4-5ZM12 14v8"/></svg><span>Pin</span></span><i class="tool-divider"></i><span class="mock-tool muted-tool"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3v12m-5-5 5 5 5-5M4 16v5h16v-5"/></svg><span>Export</span></span><span class="shortcut">F5</span></div><div class="toolbar-paper"><span class="demo-overline">LESS BETWEEN YOU AND THE WORK</span><div class="document-lines"><i></i><i></i><i></i></div><span class="command-status"><span class="note-dot"></span> Ready for your next command.</span></div></div><div class="floating-note"><span class="note-dot"></span> Familiar controls. Considered placement.</div>
+        <figcaption>Interface illustration</figcaption>
+      </figure>
+    </section>
+    <section class="features" aria-label="Library features"><article><span class="feature-number">01</span><h2>Ordinary buttons</h2><p>Keep FLTK callbacks, tooltips, shortcuts and toggle behavior. No command registry required.</p></article>
+<article><span class="feature-number">02</span><h2>SVG, ready to draw</h2><p>Owned normal and disabled images, rasterized at the current display scale.</p></article>
+<article><span class="feature-number">03</span><h2>A small, clear layout</h2><p>Horizontal placement, separators and a layout call after width or visibility changes.</p></article></section>
+    <section class="quickstart" id="quickstart" aria-labelledby="start-title">
+      <div><p class="eyebrow">Start small</p><h2 class="section-title" id="start-title">A few lines.<br>A useful starting point.</h2><p>The toolbar owns registered heap buttons. SvgButton also works on its own, outside a toolbar.</p><p>The API reference includes a complete program, CMake integration and the ownership rules behind this excerpt.</p><a class="text-link" href="API.html">See the complete example &rarr;</a></div>
+      <div><div class="code-label"><span>fltk-toolbar / usage</span><span>C++17</span></div><pre><code>#include &lt;fltk_toolbar.h&gt;
+#include &lt;fltk_toolbar_svg.h&gt;
+
+auto* toolbar = new fltk_toolbar::Toolbar(8, 8, 620, 38);
+auto* run = new fltk_toolbar::SvgButton(0, 0, 38, 38);
+run-&gt;svg(run_icon_svg);  // SVG markup, not a filename
+run-&gt;tooltip(&quot;Run command&quot;);
+run-&gt;callback(run_command, application);
+
+toolbar-&gt;add_button(*run);
+toolbar-&gt;separator();
+toolbar-&gt;end();</code></pre><div class="code-caption">Usage excerpt; surrounding application code is omitted.</div></div>
+    </section>
+    <section class="reading" aria-labelledby="reading-title">
+      <div><p class="eyebrow">A closer look</p><h2 id="reading-title">Everything you need to use it.</h2><p>Public types and methods, object lifetimes, build instructions and working examples. Maintained here, alongside the library.</p></div>
+      <div class="reading-links"><a href="API.html">API reference &amp; examples <span>&nearr;</span></a><a href="https://github.com/hdijkema/fltk-toolbar#readme">Build &amp; installation <span>&nearr;</span></a><a href="https://github.com/hdijkema/fltk-toolbar/issues">Issues &amp; feedback <span>&nearr;</span></a></div>
+    </section>
+  </main>
+  <footer class="container site-footer"><span>fltk-toolbar &middot; <a href="https://github.com/hdijkema/fltk-toolbar/blob/main/LICENSE">LGPL 2.1</a> &middot; Built for <a href="https://www.fltk.org/">FLTK</a></span><div class="family" aria-label="Related libraries"><a href="https://hdijkema.github.io/fltk-css/">fltk-css</a> <a href="https://hdijkema.github.io/fltk-cell/">fltk-cell</a> <a href="https://hdijkema.github.io/fltk-dock/">fltk-dock</a></div></footer>
+</body>
+</html>

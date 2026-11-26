@@ -1,5 +1,10 @@
 # fltk-toolbar
 
+<img src="docs/assets/logo.svg" width="80" height="80" alt="fltk-toolbar logo">
+
+[Homepage](https://hdijkema.github.io/fltk-toolbar/) |
+[API reference and usage examples](docs/API.md)
+
 A small C++17 toolbar for FLTK 1.4.5. One library provides ordinary tool buttons,
 separators, horizontal placement and SVG buttons with owned normal/disabled
 images. Native callbacks, shortcuts, toggle buttons and tooltips keep working.
