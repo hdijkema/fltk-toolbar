@@ -7,62 +7,26 @@ The library arranges ordinary FLTK buttons horizontally and renders SVG markup
 into owned normal/disabled button images. Styling, callbacks and command state
 remain in the application. Namespace: `fltk_toolbar`.
 
-## Headers and linking
+## How the API works
 
-Include `<fltk_toolbar.h>` for `Toolbar` and `<fltk_toolbar_svg.h>` for
-`SvgButton`. This CMake file builds the complete example below:
+Create a toolbar inside an FLTK window/group, configure ordinary buttons, then
+register them in their display order. Callbacks remain ordinary FLTK callbacks.
 
-```cmake
-cmake_minimum_required(VERSION 3.21)
-project(toolbar-example LANGUAGES CXX)
-find_package(fltk-toolbar 0.1 CONFIG REQUIRED)
-add_executable(example main.cpp)
-target_compile_features(example PRIVATE cxx_std_17)
-target_link_libraries(example PRIVATE fltk-toolbar::fltk-toolbar)
-```
-
-SVG support is part of the same target, using FLTK images. No separate SVG
-package or target is required.
-
-## Toolbar
-
-Declared in [fltk_toolbar.h](../include/fltk_toolbar.h).
-`Toolbar` derives from `Fl_Group`.
-
-| Public declaration | Preconditions and result |
+| Class | Construction, use and behavior |
 | --- | --- |
-| `Toolbar(int x, int y, int w, int h)` | Create a horizontal FLTK group at the supplied geometry. |
-| `void add_button(Fl_Button& button)` | Adopt a live heap button and lay out the toolbar. The toolbar owns it through FLTK parenting; retain only a borrowed pointer/reference. |
-| `void separator()` | Insert an owned separator after the current buttons. |
-| `void layout()` | Reposition children after a visibility or width change. Button widths are retained; heights follow the toolbar. |
-| `void resize(int x, int y, int w, int h) override` | Resize the group and relayout its children. |
+| `Toolbar` | Construct with normal group geometry. `add_button()` adopts a heap button; `separator()` inserts a divider. `layout()` places visible children and retains their widths while adjusting their heights. `resize()` relayouts automatically. |
+| `SvgButton` | Construct like an `Fl_Button`. `svg()` accepts SVG markup and an icon size, rendering owned normal/disabled images. `callback()`, `shortcut()`, `tooltip()` and toggle behavior come from FLTK. It can also be used outside a toolbar. |
 
-Registered buttons keep their native `callback`, `shortcut`, `tooltip`, toggle
-state and activation behavior. Call `layout()` after `hide()`, `show()` or a
-button width change. Contents are clipped; there is no overflow menu or vertical
-layout. Do not register stack buttons or independently delete adopted buttons.
-
-## SvgButton
-
-Declared in [fltk_toolbar_svg.h](../include/fltk_toolbar_svg.h).
-`SvgButton` derives from `Fl_Button` and can also be used outside a toolbar.
-
-| Declaration | Preconditions and result |
-| --- | --- |
-| `SvgButton(int x, int y, int w, int h, const char* label = nullptr)` | Create an ordinary button with optional label. |
-| `~SvgButton() override` | Release the images owned by the button. |
-| `void svg(const std::string& markup, int size = 20)` | On the GUI thread, render SVG **text**, not a filename. Logical size must be 1–256 pixels. Invalid size/image throws; a failed replacement retains the previous usable images. |
-| `void draw() override` (protected) | Draw the native button and its owned image; subclasses may override it. |
-
-The button rasterizes SVG into owned pixels, prepares normal and disabled
-composites against its background, and uses opaque RGB drawing. Background
-changes rebuild the composites; display scale changes rerender the SVG. SVG
-sanitization is not part of this library.
+Call `layout()` after changing a button's width or visibility. End the toolbar
+with `end()` before creating widgets that belong to the enclosing window.
+The toolbar owns registered buttons; each SVG button owns its images. Perform
+creation, icon changes and layout on the GUI thread.
 
 ## Complete example: a command and a toggle
 
-Save as `main.cpp`. The callback updates the status label; the toggle remains a
-native FLTK toggle button. All registered buttons are heap objects owned by the
+Save as `main.cpp`; see [Headers and linking](#headers-and-linking) for CMake
+integration. The callback updates the status label; the toggle remains a native
+FLTK toggle button. All registered buttons are heap objects owned by the
 toolbar, which is owned by the window.
 
 ```cpp
@@ -106,6 +70,43 @@ int main()
 }
 ```
 
+## Class API
+
+### Toolbar
+
+Declared in [fltk_toolbar.h](../include/fltk_toolbar.h).
+`Toolbar` derives from `Fl_Group`.
+
+| Public declaration | Preconditions and result |
+| --- | --- |
+| `Toolbar(int x, int y, int w, int h)` | Create a horizontal FLTK group at the supplied geometry. |
+| `void add_button(Fl_Button& button)` | Adopt a live heap button and lay out the toolbar. The toolbar owns it through FLTK parenting; retain only a borrowed pointer/reference. |
+| `void separator()` | Insert an owned separator after the current buttons. |
+| `void layout()` | Reposition children after a visibility or width change. Button widths are retained; heights follow the toolbar. |
+| `void resize(int x, int y, int w, int h) override` | Resize the group and relayout its children. |
+
+Registered buttons keep their native `callback`, `shortcut`, `tooltip`, toggle
+state and activation behavior. Call `layout()` after `hide()`, `show()` or a
+button width change. Contents are clipped; there is no overflow menu or vertical
+layout. Do not register stack buttons or independently delete adopted buttons.
+
+### SvgButton
+
+Declared in [fltk_toolbar_svg.h](../include/fltk_toolbar_svg.h).
+`SvgButton` derives from `Fl_Button` and can also be used outside a toolbar.
+
+| Declaration | Preconditions and result |
+| --- | --- |
+| `SvgButton(int x, int y, int w, int h, const char* label = nullptr)` | Create an ordinary button with optional label. |
+| `~SvgButton() override` | Release the images owned by the button. |
+| `void svg(const std::string& markup, int size = 20)` | On the GUI thread, render SVG **text**, not a filename. Logical size must be 1–256 pixels. Invalid size/image throws; a failed replacement retains the previous usable images. |
+| `void draw() override` (protected) | Draw the native button and its owned image; subclasses may override it. |
+
+The button rasterizes SVG into owned pixels, prepares normal and disabled
+composites against its background, and uses opaque RGB drawing. Background
+changes rebuild the composites; display scale changes rerender the SVG. SVG
+sanitization is not part of this library.
+
 ## CSS integration
 
 With fltk-css linked, include `<fltk_css_widgets.h>` and construct
@@ -113,6 +114,23 @@ With fltk-css linked, include `<fltk_css_widgets.h>` and construct
 Set `css_type("button")` and `css_classes({"primary"})` to select stylesheet
 rules. Register it with `add_button` as usual. The stylesheet must outlive the
 window and all its buttons. See the [CSS API](https://github.com/hdijkema/fltk-css/blob/main/docs/API.md).
+
+## Headers and linking
+
+Include `<fltk_toolbar.h>` for `Toolbar` and `<fltk_toolbar_svg.h>` for
+`SvgButton`. This CMake file builds the complete example near the top of this page:
+
+```cmake
+cmake_minimum_required(VERSION 3.21)
+project(toolbar-example LANGUAGES CXX)
+find_package(fltk-toolbar 0.1 CONFIG REQUIRED)
+add_executable(example main.cpp)
+target_compile_features(example PRIVATE cxx_std_17)
+target_link_libraries(example PRIVATE fltk-toolbar::fltk-toolbar)
+```
+
+SVG support is part of the same target, using FLTK images. No separate SVG
+package or target is required.
 
 ## Library build options
 
